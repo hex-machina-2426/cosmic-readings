@@ -27,6 +27,7 @@ const config: Config = {
         "shooting-star": "shootingStar 1.2s ease-in forwards",
         "glow-pulse": "glowPulse 3s ease-in-out infinite",
         "glow-shift": "glowShift 4s ease-in-out infinite",
+        "hue-rotate": "hueRotate 6s linear infinite",
       },
       keyframes: {
         twinkle: {
@@ -107,6 +108,10 @@ const config: Config = {
           "0%": { transform: "translateX(0) translateY(0)", opacity: "1" },
           "70%": { opacity: "1" },
           "100%": { transform: "translateX(300px) translateY(200px)", opacity: "0" },
+        },
+        hueRotate: {
+          "0%": { filter: "hue-rotate(0deg)" },
+          "100%": { filter: "hue-rotate(360deg)" },
         },
         glowShift: {
           "0%, 100%": { backgroundPosition: "0% 50%" },

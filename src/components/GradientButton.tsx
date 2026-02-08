@@ -3,9 +3,8 @@
 import type { ReactNode, MouseEventHandler } from "react";
 
 /**
- * GradientButton — Button with a smooth color-shifting glow edge.
- * Uses animated background-position on a gradient for a flowing
- * color change effect — no spinning chunks.
+ * GradientButton — Button with a smooth RGB color-cycling border glow.
+ * Uses CSS hue-rotate animation for a seamless color transition.
  */
 
 interface GradientButtonProps {
@@ -31,10 +30,7 @@ export default function GradientButton({
     lg: "px-8 py-4 text-lg",
   };
 
-  const glowColors = {
-    primary: "linear-gradient(270deg, #a855f7, #ec4899, #6366f1, #a855f7, #ec4899)",
-    gold: "linear-gradient(270deg, #eab308, #ec4899, #a855f7, #eab308, #ec4899)",
-  };
+  const baseHue = variant === "gold" ? "from-yellow-400 to-pink-500" : "from-purple-500 to-pink-500";
 
   return (
     <button
@@ -49,27 +45,20 @@ export default function GradientButton({
         ${className}
       `}
     >
-      {/* Glow layer — blurred, behind everything */}
-      <span
-        className={`
-          absolute -inset-[3px] rounded-full opacity-60 blur-[6px]
-          ${disabled ? "" : "group-hover:opacity-80 group-hover:blur-[10px]"}
-          transition-all duration-500
-        `}
-        style={{
-          background: disabled ? "rgb(107, 114, 128)" : glowColors[variant],
-          backgroundSize: "300% 100%",
-          animation: disabled ? "none" : "glowShift 4s ease-in-out infinite",
-        }}
-      />
+      {/* Glow — soft blur behind */}
+      {!disabled && (
+        <span
+          className={`absolute -inset-[4px] rounded-full bg-gradient-to-r ${baseHue} opacity-50 blur-md group-hover:opacity-70 group-hover:blur-lg transition-all duration-500`}
+          style={{ animation: "hueRotate 6s linear infinite" }}
+        />
+      )}
 
-      {/* Border layer — sharp edge */}
+      {/* Border — thin sharp edge */}
       <span
-        className="absolute -inset-[2px] rounded-full transition-all duration-300"
+        className={`absolute -inset-[1.5px] rounded-full bg-gradient-to-r ${baseHue}`}
         style={{
-          background: disabled ? "rgb(107, 114, 128)" : glowColors[variant],
-          backgroundSize: "300% 100%",
-          animation: disabled ? "none" : "glowShift 4s ease-in-out infinite",
+          animation: disabled ? "none" : "hueRotate 6s linear infinite",
+          background: disabled ? "rgb(107, 114, 128)" : undefined,
         }}
       />
 
