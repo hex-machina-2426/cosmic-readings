@@ -1,0 +1,14 @@
+node_modules/
+.next/
+SOUL.md
+AGENTS.md
+USER.md
+IDENTITY.md
+MEMORY.md
+HEARTBEAT.md
+TOOLS.md
+BOOTSTRAP.md
+memory/
+*.jsonl
+.env
+.env.local
