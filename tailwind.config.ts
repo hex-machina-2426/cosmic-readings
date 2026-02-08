@@ -26,6 +26,7 @@ const config: Config = {
         "toast-out": "toastOut 0.3s ease-in forwards",
         "shooting-star": "shootingStar 1.2s ease-in forwards",
         "glow-pulse": "glowPulse 3s ease-in-out infinite",
+        "glow-shift": "glowShift 4s ease-in-out infinite",
       },
       keyframes: {
         twinkle: {
@@ -106,6 +107,10 @@ const config: Config = {
           "0%": { transform: "translateX(0) translateY(0)", opacity: "1" },
           "70%": { opacity: "1" },
           "100%": { transform: "translateX(300px) translateY(200px)", opacity: "0" },
+        },
+        glowShift: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
         glowPulse: {
           "0%, 100%": { opacity: "0.4", transform: "scale(1)" },

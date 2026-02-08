@@ -3,9 +3,9 @@
 import type { ReactNode, MouseEventHandler } from "react";
 
 /**
- * GradientButton — Button with an animated rotating gradient border.
- * Uses a conic-gradient pseudo-element that spins behind the button,
- * visible as a glowing animated border.
+ * GradientButton — Button with a smooth color-shifting glow edge.
+ * Uses animated background-position on a gradient for a flowing
+ * color change effect — no spinning chunks.
  */
 
 interface GradientButtonProps {
@@ -31,9 +31,9 @@ export default function GradientButton({
     lg: "px-8 py-4 text-lg",
   };
 
-  const gradientColors = {
-    primary: "from-purple-500 via-pink-500 to-purple-500",
-    gold: "from-yellow-400 via-pink-500 to-yellow-400",
+  const glowColors = {
+    primary: "linear-gradient(270deg, #a855f7, #ec4899, #6366f1, #a855f7, #ec4899)",
+    gold: "linear-gradient(270deg, #eab308, #ec4899, #a855f7, #eab308, #ec4899)",
   };
 
   return (
@@ -49,28 +49,27 @@ export default function GradientButton({
         ${className}
       `}
     >
-      {/* Animated gradient border — spins behind the button */}
+      {/* Glow layer — blurred, behind everything */}
       <span
         className={`
-          absolute -inset-[2px] rounded-full
-          bg-gradient-to-r ${gradientColors[variant]}
-          ${disabled ? "" : "animate-gradient-spin group-hover:blur-sm"}
-          transition-all duration-300
+          absolute -inset-[3px] rounded-full opacity-60 blur-[6px]
+          ${disabled ? "" : "group-hover:opacity-80 group-hover:blur-[10px]"}
+          transition-all duration-500
         `}
         style={{
-          backgroundSize: "200% 200%",
-          animation: disabled ? "none" : "gradientSpin 3s linear infinite",
-          background: disabled
-            ? "rgb(107, 114, 128)"
-            : `conic-gradient(
-                from 0deg,
-                #a855f7,
-                #ec4899,
-                #eab308,
-                #a855f7,
-                #ec4899,
-                #a855f7
-              )`,
+          background: disabled ? "rgb(107, 114, 128)" : glowColors[variant],
+          backgroundSize: "300% 100%",
+          animation: disabled ? "none" : "glowShift 4s ease-in-out infinite",
+        }}
+      />
+
+      {/* Border layer — sharp edge */}
+      <span
+        className="absolute -inset-[2px] rounded-full transition-all duration-300"
+        style={{
+          background: disabled ? "rgb(107, 114, 128)" : glowColors[variant],
+          backgroundSize: "300% 100%",
+          animation: disabled ? "none" : "glowShift 4s ease-in-out infinite",
         }}
       />
 
